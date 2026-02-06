@@ -23,10 +23,7 @@ function getHumanChoice() {
 let humanScore = 0;
 let computerScore = 0;
 
-function play(){
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-
+function playRound(){
     if (humanChoice === computerChoice) {
         console.log("It's a tie!");
     } else if (
@@ -44,4 +41,9 @@ function play(){
     console.log(`Score: You ${humanScore} - Computer ${computerScore}`);
 }
 
-play();
+const humanChoice = getHumanChoice();
+const computerChoice = getComputerChoice();
+
+for (let i = 0; i < 5; i++) {
+    playRound(humanChoice, computerChoice);
+}
