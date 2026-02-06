@@ -12,38 +12,46 @@ function getComputerChoice() {
 }
 
 
-function getHumanChoice() {
-    let choice = prompt("Enter rock, paper, or scissors:").toLowerCase();
-    while (!['rock', 'paper', 'scissors'].includes(choice)) {
-        choice = prompt("Invalid choice. Please enter rock, paper, or scissors:").toLowerCase();
-    }
-    return choice;
-}
 
 let humanScore = 0;
 let computerScore = 0;
 
-function playRound(){
+function playRound(humanChoice, computerChoice){
+    const resultDiv = document.querySelector('.result');
+    const scoreDiv = document.querySelector('.score');
+    const finalResultDiv = document.querySelector('.final-result');
+    finalResultDiv.textContent = ``;
+    resultDiv.textContent = ``;
     if (humanChoice === computerChoice) {
-        console.log("It's a tie!");
+        resultDiv.textContent += `It's a tie!`;
     } else if (
         (humanChoice === 'rock' && computerChoice === 'scissors') ||
         (humanChoice === 'paper' && computerChoice === 'rock') ||
         (humanChoice === 'scissors' && computerChoice === 'paper')
     ) {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+        resultDiv.textContent += `You win! ${humanChoice} beats ${computerChoice}`;
         humanScore++;
     } else {
-        console.log(`Computer wins! ${computerChoice} beats ${humanChoice}`);
+        resultDiv.textContent += `Computer wins! ${computerChoice} beats ${humanChoice}`;
         computerScore++;
     }
-
-    console.log(`Score: You ${humanScore} - Computer ${computerScore}`);
+    scoreDiv.textContent = `Score: You ${humanScore} - Computer ${computerScore}`;
+    if (humanScore === 5) {
+        finalResultDiv.textContent = `Congratulations! You won the game!`;
+        humanScore = 0;
+        computerScore = 0;
+    } else if (computerScore === 5) {
+        finalResultDiv.textContent = `Sorry! Computer won the game!`;
+        humanScore = 0;
+        computerScore = 0;
+    }
 }
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
-
-for (let i = 0; i < 5; i++) {
-    playRound(humanChoice, computerChoice);
-}
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const humanChoice = button.className;
+        const computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+    });
+});
